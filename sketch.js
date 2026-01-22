@@ -10,6 +10,8 @@ let blob3 = {
   // Visual properties
   r: 26, // Base radius
   points: 48, // Number of points used to draw the blob
+  basePoints: 48, // Base number of points used to draw the blob
+  panicPoints: 48 / 4, //Number of points used when 'panicking'
   wobble: 7, // Edge deformation amount
   wobbleFreq: 0.9,
 
@@ -137,6 +139,14 @@ function draw() {
 
   // --- Draw the animated blob ---
   blob3.t += blob3.tSpeed;
+
+  // --- Reduce points when moving horizontally ---
+  if (round(blob3.vx) != 0) {
+    blob3.points = blob3.panicPoints;
+  } else {
+    blob3.points = blob3.basePoints;
+  }
+
   drawBlobCircle(blob3);
 
   // --- HUD ---
